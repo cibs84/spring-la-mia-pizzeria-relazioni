@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "org.hibernate.orm.jdbc.bind",
+  "type": "java.lang.String",
+  "description": "A description for 'org.hibernate.orm.jdbc.bind'"
+}]}

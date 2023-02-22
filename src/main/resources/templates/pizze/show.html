@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Pizza</title>
+
+<th:block th:replace="~{fragments :: head}"></th:block>
+</head>
+<body>
+	<main class="container">
+	<!-- Torna alla Home -->
+		<a th:href="@{/}" class="my-3 d-inline-block btn btn-outline-primary">
+			Torna alle pizze &nbsp;<i class="fa fa-right-from-bracket"></i>
+		</a>
+		<!-- Modifica -->
+		<a th:href="@{/pizze/edit/{id} (id=${pizza.id})}" class="btn btn-outline-success">
+   			Modifica <i class="fa-regular fa-pen-to-square"></i>
+   		</a>
+   		<!-- Elimina -->
+      	<form action="#" th:action="@{/pizze/delete/{id}(id=${pizza.id})}" method="post" class="d-inline-block">
+      		<button type="submit" id="submitButton" class="btn btn-outline-danger">
+      			Elimina <i class="fa fa-trash-alt"></i>
+      		</button>
+      	</form>
+		
+		<h1 th:text="${pizza.name}" class="text-center my-5"></h1>
+		<div class="row">
+			<div class="ms-auto col-6">
+				<img th:alt="|Immagine Pizza ${pizza.name}|" th:src="@{${pizza.photo}}" class="mb-3" width="100%">
+				<h4>Ingredienti</h4>
+				<p>[[${pizza.description}]]</p>
+			</div>
+			<div class="me-auto col-3">
+				<a th:href="@{|/offerte/create?pizzaId=${pizza.id}|}" class="my-3 d-inline-block btn btn-outline-primary">
+					Crea offerta
+				</a>
+			
+				<h4>Offerte</h4>
+				
+			</div>
+		</div>
+	</main>
+	
+	<!-- Scripts -->
+	<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

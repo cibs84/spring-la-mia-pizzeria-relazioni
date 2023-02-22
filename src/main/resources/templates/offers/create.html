@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Crea nuova offerta</title>
+</head>
+<body>
+	<main class="container">
+		<h1 class="mt-4">Crea nuova offerta</h1>
+		
+		<!--  Form: Crea una nuova offer -->
+		<form id="offer-form" th:object="${offer}" action="/offerte/store" method="post">
+			<!--  Nome -->
+	    	<label for="title" class="form-label">Nome</label>
+	    	<input type="text" maxlength="30" th:field="*{title}" class="form-control" id="title" th:errorClass="is-invalid">
+			<!-- Validation Error -->
+		  	<div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+				<ul>
+					<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+				</ul>
+			</div>
+		  	
+		  	<div class="input-group input-group-lg mt-2">
+				<label class="input-group-text" id="inputGroup-sizing-lg" for="startOffer">
+					Inizio Offerta:
+				</label> 
+				<input type="date"
+					id="startOffer" th:field="*{startOffer}" class="form-control"
+					th:errorClass="is-invalid">
+
+				<div th:if="${#fields.hasErrors('startOffer')}" class="invalid-feedback">
+					<ul>
+						<li th:each="err: ${#fields.errors('startOffer')}"
+							th:text="${err}"></li>
+					</ul>
+				</div>
+			</div>
+			
+		  	
+		  	<!-- Button Crea -->
+		  	<button type="submit" class="btn btn-primary">Crea</button>
+		</form>
+	</main>
+</body>
+</html>

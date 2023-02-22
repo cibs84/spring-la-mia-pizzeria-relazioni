@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Pizze</title>
+
+<th:block th:replace="~{fragments :: head}"></th:block>
+</head>
+<body>
+	<main class="container">
+		<h1 class="text-center my-5">Pizze</h1>
+		
+		<!-- Cerca per nome pizza -->
+		<form action="pizze" class="row my-5">
+			<div class="col-auto px-0">
+				<input type="text" class="form-control" id="keyword" name="keyword" placeholder="Inserisci nome pizza">
+			</div>
+			<div class="col-auto px-2">
+				<button type="submit" class="btn btn-primary col-auto">Cerca</button>
+			</div>
+			
+			<!-- Inserisci una nuova pizza -->
+			<div class="col-auto px-2">
+				<a href="pizze/create" class="btn btn-success col-auto">Inserisci una nuova pizza</a>
+			</div>
+		</form>
+		
+		<!-- SE non ci sono pizze nel db -->
+		<h2 class="text-center my-5" th:unless="${pizze.size() > 0}">Non ci sono pizze disponibili</h2>
+		<!-- ALTRIMENTI: Lista pizze -->
+		<table th:if="${pizze.size() > 0}" class="table table-hover align-middle">
+			<thead>
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Nome</th>
+			      <th scope="col">Descrizione</th>
+			      <th scope="col">Prezzo</th>
+			      <th scope="col">Foto</th>
+			      <th scope="col">Azioni</th>
+			    </tr>
+	  		</thead>
+		  	<tbody>
+			    <tr th:each="pizza : ${pizze}" th:onclick="|window.location='/pizze/${pizza.id}';|" style="cursor:pointer;">
+			      <th>[[${pizza.id}]]</th>
+			      <td>[[${pizza.name}]]</td>
+			      <td>[[${pizza.description}]]</td>
+			      <td>€ [[${pizza.price}]]</td>
+			      <td><img th:src="@{${pizza.photo}}" width="100"></td>
+			      <!-- Azioni -->
+			      <td>
+			      	<!-- Visualizza -->
+					<a th:href="@{/pizze/{id} (id=${pizza.id})}" class="btn btn-primary">
+		      			<i class="fa-solid fa-sheet-plastic"></i>
+		      		</a>
+			      	<!-- Modifica -->
+					<a th:href="@{/pizze/edit/{id} (id=${pizza.id})}" class="btn btn-success">
+		      			<i class="fa-regular fa-pen-to-square"></i>
+		      		</a>
+		      		<!-- Elimina -->
+			      	<form action="#" th:action="@{/pizze/delete/{id}(id=${pizza.id})}" method="post" class="d-inline-block">
+			      		<button type="submit" id="submitButton" class="btn btn-danger">
+			      			<i class="fa fa-trash-alt"></i>
+			      		</button>
+			      	</form>
+			      </td>
+			    </tr>
+		  	</tbody>
+		</table>
+	</main>
+	
+	<!-- Scripts -->
+	<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

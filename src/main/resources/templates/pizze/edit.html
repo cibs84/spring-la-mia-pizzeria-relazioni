@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Modifica pizza</title>
+
+<th:block th:replace="~{fragments :: head}"></th:block>
+</head>
+<body>
+	<main class="container">
+	<!-- Heading -->
+		<div class="d-flex align-items-center">
+			<h1 class="mt-4 me-5">Modifica pizza</h1>
+			
+			<!-- BOTTONI AZIONI -->
+			<div class="mt-4 d-inline-block">
+				<!-- Torna alle pizze -->
+		  		<a class="btn btn-outline-success" th:href="@{/pizze}">
+		  			Torna alle pizze &nbsp;<i class="fa fa-right-from-bracket"></i>
+	  			</a>
+		  		<!-- Elimina -->
+		      	<form action="#" th:action="@{/pizze/delete/{id}(id=${pizza.id})}" method="post" class="d-inline-block">
+		      		<button type="submit" id="submitButton" class="btn btn-outline-danger">
+		      			Elimina <i class="fa fa-trash-alt"></i>
+		      		</button>
+		      	</form>
+	      	</div>
+		</div>
+		<!--  Form: Crea una nuova pizza -->
+		<form id="pizza-form" th:object="${pizza}" 
+			th:action="@{/pizze/update/{id}(id=${pizza.id})}" method="post">
+			<!--  Nome -->
+	    	<label for="name" class="form-label">Nome</label>
+	    	<input type="text" maxlength="30" th:field="*{name}" class="form-control" id="name" th:errorClass="is-invalid">
+			<!-- Validation Error -->
+		  	<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+				<ul>
+					<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+				</ul>
+			</div>
+		  
+			<!--  Descrizione -->
+	    	<label for="description" class="form-label">Descrizione</label>
+	    	<input type="text" maxlength="100" th:field="*{description}" class="form-control" id="description" th:errorClass="is-invalid">
+		  	<!-- Validation Error -->
+		  	<div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+		  		<ul>
+		  			<li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+		  		</ul>
+		  	</div>
+		  
+			<!--  Prezzo -->
+	    	<label for="price" class="form-label">Prezzo</label>
+	    	<input type="number" th:field="*{price}" min="1" max="99.99" step="0.50" class="form-control" id="price" th:errorClass="is-invalid">
+		  	<!-- Validation Error -->
+		  	<div th:if="${#fields.hasErrors('price')}" class="invalid-feedback">
+		  		<ul>
+		  			<li th:each="err : ${#fields.errors('price')}" th:text="${err}"></li>
+		  		</ul>
+		  	</div>
+		  
+			<!--  Immagine -->
+	    	<label for="photo" class="form-label">Immagine</label>
+	    	<input type="text" th:field="*{photo}" maxlength="200" class="form-control" id="photo" th:errorClass="is-invalid">
+		  	<!-- Validation Error -->
+		  	<div th:if="${#fields.hasErrors('photo')}" class="invalid-feedback">
+		  		<ul>
+		  			<li th:each="err : ${#fields.errors('photo')}" th:text="${err}"></li>
+		  		</ul>
+		  	</div>
+		  	
+	  		<!-- Salva -->
+	  		<button type="submit" class="btn btn-primary mt-4 d-inline-block">Salva</button>
+		</form>
+	</main>
+
+	<!-- Scripts -->
+	<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>
