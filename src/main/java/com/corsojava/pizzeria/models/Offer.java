@@ -1,6 +1,5 @@
 package com.corsojava.pizzeria.models;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
@@ -8,8 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Offer {
@@ -17,15 +14,24 @@ public class Offer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull(message = "Deve essere inserito il titolo dell'offerta")
+@Override
+	public String toString() {
+		return "Offer [id=" + id + ", title=" + title + ", startDate=" + startDate + ", endDate=" + endDate + ", pizza="
+				+ pizza + ", getId()=" + getId() + ", getTitle()=" + getTitle() + ", getStartDate()=" + getStartDate()
+				+ ", getEndDate()=" + getEndDate() + ", getPizza()=" + getPizza() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
+	//	@NotNull(message = "Deve essere inserito il titolo dell'offerta")
 	private String title;
 	
-	@NotNull(message = "Deve essere inserita una data d'inizio offerta")
+//	@NotNull(message = "Deve essere inserita una data d'inizio offerta")
 	private LocalDate startDate;
 	
+//	@NotNull(message = "Deve essere inserita una data d'inizio offerta")
 	private LocalDate endDate;
 	
-	@NotNull
+//	@NotNull
 	@ManyToOne
 	private Pizza pizza;
 

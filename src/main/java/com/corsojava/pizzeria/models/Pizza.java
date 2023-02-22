@@ -1,7 +1,6 @@
 package com.corsojava.pizzeria.models;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -10,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
@@ -18,12 +16,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "pizza")
 public class Pizza {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotNull(message = "Il campo Nome deve essere compilato")
 	
 	@NotNull(message = "Il campo Descrizione deve essere compilato")
@@ -48,9 +45,6 @@ public class Pizza {
 	@DecimalMin(value = "1.00", message = "Il prezzo minimo è €1")
 	@Column(nullable=false, precision=4, scale=2)
 	private BigDecimal price;
-	
-//	@OneToMany
-//	@JoinColumn(name = "pizza_id")
 	
 	@OneToMany(mappedBy = "pizza")
 	private List<Offer> offers;

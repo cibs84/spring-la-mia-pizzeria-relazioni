@@ -8,7 +8,7 @@
 </head>
 <body>
 	<main class="container">
-	<!-- Torna alla Home -->
+		<!-- Torna alla Home -->
 		<a th:href="@{/}" class="my-3 d-inline-block btn btn-outline-primary">
 			Torna alle pizze &nbsp;<i class="fa fa-right-from-bracket"></i>
 		</a>
@@ -30,13 +30,22 @@
 				<h4>Ingredienti</h4>
 				<p>[[${pizza.description}]]</p>
 			</div>
-			<div class="me-auto col-3">
-				<a th:href="@{|/offerte/create?pizzaId=${pizza.id}|}" class="my-3 d-inline-block btn btn-outline-primary">
+			<div class="me-auto col-4">
+				<a th:href="@{|/offerte/create?pizzaId=${pizza.id}|}" class="my-3 d-inline-block btn btn-primary">
 					Crea offerta
 				</a>
 			
 				<h4>Offerte</h4>
-				
+				<table class="table table-hover align-middle">
+					<thead>
+					    <tr>
+					      <th scope="col">Nome</th>
+					      <th scope="col">Data Inizio</th>
+					      <th scope="col">Data Fine</th>
+					    </tr>
+			  		</thead>
+
+				</table>
 			</div>
 		</div>
 	</main>

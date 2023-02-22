@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,6 @@ import com.corsojava.pizzeria.repository.OfferRepository;
 import com.corsojava.pizzeria.repository.PizzaRepository;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/offerte")
@@ -33,7 +31,7 @@ public class OfferController {
 	@GetMapping() 
 	public String index(Model model) {
 		List<Offer> offers = offerRepository.findAll();
-		model.addAttribute("specialOffers", offers);
+		model.addAttribute("offers", offers);
 		
 		return "offers/index";
 	}
@@ -59,17 +57,23 @@ public class OfferController {
 	
 	@PostMapping("/store")
 	public String store(
-		@Valid @ModelAttribute("offer") Offer formOffer, 
-		BindingResult bindingResult,
+//		@Valid @ModelAttribute("offer") Offer formOffer, 
+//		BindingResult bindingResult,
+//		Model model){
+//		
+//		if (bindingResult.hasErrors()) {
+//			System.out.println(bindingResult);
+//			return "offers/create";
+//		}
+			
+		@ModelAttribute("offer") Offer formOffer, 
 		Model model){
-		
-		if (bindingResult.hasErrors()) {
-			return "offers/create";
-		}
-		
+			
 		offerRepository.save(formOffer);
 		
-		return "redirect:/offerte"; //genera un altro get
+//		model.addAttribute("pizza", formOffer.getPizza());
+		
+		return "redirect:/pizze/" + formOffer.getPizza().getId(); //genera un altro get
 		
 	}
 }

@@ -46,15 +46,16 @@ public class PizzaController {
 		return "pizze/index";
 	}
 	
-	@GetMapping("{id}") // GET /pizze/{id}
+	@GetMapping("/{id}")
 	public String show(@PathVariable("id") Long id, Model model) {
+		
 		Optional<Pizza> pizza = pizzaRepository.findById(id);
 		if (pizza.isEmpty()) {
-			return "pizze/notfound";
-		} else {
-			model.addAttribute("pizza", pizza.get());
-//			model.addAttribute("category", pizza.getCategories.get(0).getName);
+			return "redirect:/error";
 		}
+		
+		model.addAttribute("pizza", pizza.get());
+		
 		return "pizze/show";
 	}
 	
@@ -71,24 +72,13 @@ public class PizzaController {
 	@PostMapping("/store")
 	public String store(
 			@Valid @ModelAttribute("pizza") Pizza formPizza,
-			BindingResult bindingResult) {
+			BindingResult bindingResult, Model model) {
 		
 		if (bindingResult.hasErrors()) {
 			return "/pizze/create";
 		}
 		
-		try {
-			pizzaRepository.save(formPizza);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("*** Errore SQL !!! ***");
-			System.out.println("*** Errore SQL !!! ***");
-			System.out.println("*** Errore SQL !!! ***");
-			System.out.println("*** Errore SQL !!! ***");
-			System.out.println("*** Errore SQL !!! ***");
-//			System.out.println(e.getMessage());
-//			e.printStackTrace();
-		}
+		pizzaRepository.save(formPizza);
 		
 		return "redirect:/pizze";
 	}
