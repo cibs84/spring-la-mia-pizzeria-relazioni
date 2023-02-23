@@ -52,6 +52,14 @@
 		  		</ul>
 		  	</div>
 		  	
+		  	<h4>Ingredienti</h4>
+			<div th:each="ingrediente : ${ingredienti}">
+				<input type="checkbox" class="form-check-input" th:value="${ingrediente.id}" 
+				th:field="${pizza.ingredienti}" th:id="|ingrediente_${ingrediente.id}|">
+				<label class="form-check-label" th:text="${ingrediente.name}" 
+					th:for="|ingrediente_${ingrediente.id}|"></label>
+			</div>
+		  	
 		  	<!-- Button Crea -->
 		  	<button type="submit" class="btn btn-primary">Crea</button>
 		</form>

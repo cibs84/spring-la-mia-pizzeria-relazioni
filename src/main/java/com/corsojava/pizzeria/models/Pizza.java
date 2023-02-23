@@ -3,11 +3,13 @@ package com.corsojava.pizzeria.models;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -21,7 +23,6 @@ public class Pizza {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull(message = "Il campo Nome deve essere compilato")
 	
 	@NotNull(message = "Il campo Descrizione deve essere compilato")
 	@NotEmpty(message = "Il campo Descrizione deve essere compilato")
@@ -29,6 +30,7 @@ public class Pizza {
 	@Column(nullable=false, length=100)
 	private String description;
 	
+	@NotNull(message = "Il campo Nome deve essere compilato")
 	@NotEmpty(message = "Il campo Nome deve essere compilato")
 	@Size(max = 30, message = "Inserire massimo 30 caratteri")
 	@Column(nullable=false, length=30)
@@ -46,8 +48,13 @@ public class Pizza {
 	@Column(nullable=false, precision=4, scale=2)
 	private BigDecimal price;
 	
+//	@OneToMany(mappedBy = "pizza", fetch=FetchType.EAGER)
 	@OneToMany(mappedBy = "pizza")
 	private List<Offer> offers;
+	
+//	@ManyToMany(mappedBy = "pizze", cascade = CascadeType.ALL)
+	@ManyToMany
+	List<Ingrediente> ingredienti;
 
 	public Long getId() {
 		return id;
@@ -95,5 +102,13 @@ public class Pizza {
 
 	public void setOffers(List<Offer> offers) {
 		this.offers = offers;
+	}
+
+	public List<Ingrediente> getIngredienti() {
+		return ingredienti;
+	}
+
+	public void setIngredienti(List<Ingrediente> ingredienti) {
+		this.ingredienti = ingredienti;
 	}
 }

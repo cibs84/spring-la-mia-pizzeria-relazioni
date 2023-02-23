@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Modifica offerta</title>
+
+<th:block th:replace="~{fragments :: head}"></th:block>
+</head>
+<body>
+	<main class="container">
+		<h1 class="mt-4">Modifica offerta</h1>
+		
+		<h5 th:text="${offer.startDate}"></h5>
+		
+		<!--  Form: Crea una nuova offer -->
+		<form id="offer-form" th:object="${offer}" th:action="@{/offerte/update/{id} (id=${offer.id})}" method="post">
+			<input type="hidden" th:field="*{pizza.id}">
+			<!--  Nome -->
+	    	<label for="title" class="form-label">Nome</label>
+	    	<input type="text" maxlength="30" th:field="*{title}" class="form-control" id="title" th:errorClass="is-invalid">
+			<!-- Validation Error -->
+		  	<div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+				<ul>
+					<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+				</ul>
+			</div>
+		  	
+		  	<div class="input-group input-group-lg mt-2">
+				<label class="input-group-text" id="inputGroup-sizing-lg" for="startDate">
+					Inizio Offerta:
+				</label> 
+				<input type="date"
+					id="startDate" th:field="*{startDate}" class="form-control"
+					th:errorClass="is-invalid">
+
+				<div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
+					<ul>
+						<li th:each="err: ${#fields.errors('startDate')}"
+							th:text="${err}"></li>
+					</ul>
+				</div>
+				
+				<label class="input-group-text" id="inputGroup-sizing-lg" for="endDate">
+					Fine Offerta:
+				</label> 
+				<input type="date"
+					id="endDate" th:field="*{endDate}" class="form-control"
+					th:errorClass="is-invalid">
+
+				<div th:if="${#fields.hasErrors('endDate')}" class="invalid-feedback">
+					<ul>
+						<li th:each="err: ${#fields.errors('endDate')}"
+							th:text="${err}"></li>
+					</ul>
+				</div>
+			</div>
+			
+		  	
+		  	<!-- Button Crea -->
+		  	<button type="submit" class="btn btn-primary">Salva</button>
+		</form>
+	</main>
+</body>
+</html>

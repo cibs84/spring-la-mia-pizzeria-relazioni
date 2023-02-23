@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,6 +75,40 @@ public class OfferController {
 //		model.addAttribute("pizza", formOffer.getPizza());
 		
 		return "redirect:/pizze/" + formOffer.getPizza().getId(); //genera un altro get
+	}
+	
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, Model model) {
+		Offer offer = offerRepository.getReferenceById(id);
+		model.addAttribute("offer", offer);
 		
+		return "offers/edit";
+	}
+	
+	@PostMapping("/update/{id}")
+	public String update(
+//			@Valid @ModelAttribute Offer formOffer,
+//			BindingResult bindingResult,
+//			Model model) {
+//		
+//		if (bindingResult.hasErrors()) {
+//			return "offers/edit";
+//		}
+		@ModelAttribute Offer formOffer,
+		Model model) {
+			
+		offerRepository.save(formOffer);
+		
+		return "redirect:/pizze/" + formOffer.getPizza().getId();
+	}
+	
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		
+		Long pizzaId = offerRepository.getReferenceById(id).getPizza().getId();
+
+		offerRepository.deleteById(id);
+		
+		return "redirect:/pizze/" + pizzaId;
 	}
 }

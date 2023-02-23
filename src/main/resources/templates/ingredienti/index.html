@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Pizze</title>
+
+<th:block th:replace="~{fragments :: head}"></th:block>
+</head>
+<body>
+	<main class="container">
+		<h1 class="text-center my-5">Ingredienti</h1>
+		
+		
+		<!-- SE non ci sono pizze nel db -->
+		<h2 class="text-center my-5" th:unless="${ingredienti.size() > 0}">Non ci sono pizze disponibili</h2>
+		
+		<!-- Inserisci una nuova pizza -->
+		<div class="col-auto px-2">
+			<a href="ingredienti/create" class="btn btn-success col-auto mb-3">Inserisci un nuovo ingrediente</a>
+		</div>
+		
+		<!-- ALTRIMENTI: Lista pizze -->
+		<table th:if="${ingredienti.size() > 0}" class="table table-hover align-middle">
+			<thead>
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Nome</th>
+			    </tr>
+	  		</thead>
+		  	<tbody>
+			    <tr th:each="ingrediente : ${ingredienti}">
+			      <th>[[${ingrediente.id}]]</th>
+			      <td>[[${ingrediente.name}]]</td>
+			      <!-- Azioni -->
+			      <td>
+			      	<!-- Visualizza -->
+					<a th:href="@{/ingredienti/{id} (id=${ingrediente.id})}" class="btn btn-primary">
+		      			<i class="fa-solid fa-sheet-plastic"></i>
+		      		</a>
+			      	<!-- Modifica -->
+					<a th:href="@{/ingredienti/edit/{id} (id=${ingrediente.id})}" class="btn btn-success">
+		      			<i class="fa-regular fa-pen-to-square"></i>
+		      		</a>
+		      		<!-- Elimina -->
+			      	<form action="#" th:action="@{/ingredienti/delete/{id}(id=${ingrediente.id})}" method="post" class="d-inline-block">
+			      		<button type="submit" id="submitButton" class="btn btn-danger">
+			      			<i class="fa fa-trash-alt"></i>
+			      		</button>
+			      	</form>
+			      </td>
+			    </tr>
+		  	</tbody>
+		</table>
+	</main>
+	
+	<!-- Scripts -->
+	<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

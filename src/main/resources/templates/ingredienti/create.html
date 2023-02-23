@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Crea un nuovo ingrediente</title>
+
+<th:block th:replace="~{fragments :: head}"></th:block>
+</head>
+<body>
+	<main class="container">
+		<h1 class="mt-4">Crea un nuovo ingrediente</h1>
+		
+		<!--  Form: Crea un nuovo ingrediente -->
+		<form id="ingrediente-form" th:object="${ingrediente}" th:action="@{/ingredienti/store}" method="post">
+			<!--  Nome -->
+	    	<label for="name" class="form-label">Nome</label>
+	    	<input type="text" maxlength="30" th:field="*{name}" class="form-control" id="name" th:errorClass="is-invalid">
+			<!-- Validation Error -->
+		  	<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+				<ul>
+					<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+				</ul>
+			</div>
+		  	
+		  	<!-- Button Crea -->
+		  	<button type="submit" class="btn btn-primary mt-3">Crea</button>
+		</form>
+	</main>
+
+	<!-- Scripts -->
+	<div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

@@ -28,7 +28,7 @@
 		</div>
 		<!--  Form: Crea una nuova pizza -->
 		<form id="pizza-form" th:object="${pizza}" 
-			th:action="@{/pizze/update/{id}(id=${pizza.id})}" method="post">
+			th:action="@{/pizze/update/{id} (id=${pizza.id})}" method="post">
 			<!--  Nome -->
 	    	<label for="name" class="form-label">Nome</label>
 	    	<input type="text" maxlength="30" th:field="*{name}" class="form-control" id="name" th:errorClass="is-invalid">
@@ -69,9 +69,22 @@
 		  		</ul>
 		  	</div>
 		  	
+		  	<h4 class="mt-4">Ingredienti</h4>
+			<div th:each="ingrediente : ${ingredienti}" class="form-check">
+				<input type="checkbox" class="form-check-input" 
+						th:value="${ingrediente.id}" 
+						th:field="*{ingredienti}"
+						th:checked="${pizza.ingredienti.contains(ingrediente)}" 
+						th:id="|ingrediente_${ingrediente.id}|">
+				<label class="form-check-label" th:text="${ingrediente.name}" 
+						th:for="|ingrediente_${ingrediente.id}|"></label>
+			</div>
+		  	
 	  		<!-- Salva -->
 	  		<button type="submit" class="btn btn-primary mt-4 d-inline-block">Salva</button>
 		</form>
+		
+		
 	</main>
 
 	<!-- Scripts -->

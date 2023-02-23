@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.corsojava.pizzeria.models.Ingrediente;
 import com.corsojava.pizzeria.models.Pizza;
+import com.corsojava.pizzeria.repository.IngredienteRepository;
 import com.corsojava.pizzeria.repository.PizzaRepository;
 
 import jakarta.validation.Valid;
@@ -26,6 +28,9 @@ public class PizzaController {
 	
 	@Autowired
 	private PizzaRepository pizzaRepository;
+
+	@Autowired
+	private IngredienteRepository ingredienteRepository;
 	
 	@GetMapping()
 	public String index(
@@ -53,8 +58,9 @@ public class PizzaController {
 		if (pizza.isEmpty()) {
 			return "redirect:/error";
 		}
+		Pizza pizza2 = pizza.get();
 		
-		model.addAttribute("pizza", pizza.get());
+		model.addAttribute("pizza", pizza2);
 		
 		return "pizze/show";
 	}
@@ -63,6 +69,9 @@ public class PizzaController {
 	public String create(Model model) {
 		Pizza pizza = new Pizza();
 		model.addAttribute("pizza", pizza);
+		
+		List<Ingrediente> ingredienti = ingredienteRepository.findAll();
+		model.addAttribute("ingredienti", ingredienti);
 		
 		pizza.setPhoto("https://rusticslice.ca/wp-content/uploads/2015/08/placeholder-pizza.jpg");
 		
@@ -87,6 +96,10 @@ public class PizzaController {
 	public String edit(@PathVariable("id") Long id, Model model) {
 		Pizza pizza = pizzaRepository.getReferenceById(id);
 		model.addAttribute("pizza", pizza);
+		
+		List<Ingrediente> ingredienti = ingredienteRepository.findAll();
+		model.addAttribute("ingredienti", ingredienti);
+		
 		return "pizze/edit";
 	}
 	
